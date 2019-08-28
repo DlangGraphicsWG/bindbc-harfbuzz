@@ -1,0 +1,38 @@
+{
+	"name": "bindbc-harfbuzz",
+	"authors": [ "Ahmet Sait Koçak" ],
+	"description": "Dynamic and static bindings to HarfBuzz, compatible with -betterC, @nogc, and nothrow.",
+	"copyright": "Copyright © 2019, Ahmet Sait Koçak",
+	"license": "MIT",
+	"targetType": "staticLibrary",
+	"targetPath": "lib",
+	"configurations": [
+		{
+			"name": "dynamic",
+			"dependencies": {
+				"bindbc-loader": "~>0.2.1"
+			}
+		},
+		{
+			"name": "dynamicBC",
+			"dependencies": {
+				"bindbc-loader": "~>0.2.1"
+			},
+			"dflags": ["-betterC"],
+			"subConfigurations": {
+				"bindbc-loader": "yesBC"
+			}
+		},
+		{
+			"name": "static",
+			"versions": [ "BindHB_Static" ],
+			"excludedSourceFiles": [ "source/bindbc/sdl/dynload.d" ],
+		},
+		{
+			"name": "staticBC",
+			"versions": [ "BindHB_Static" ],
+			"excludedSourceFiles": [ "source/bindbc/sdl/dynload.d" ],
+			"dflags": ["-betterC"]
+		}
+	]
+}
