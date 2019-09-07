@@ -36,7 +36,7 @@ enum HB_VERSION_MICRO = 0;
 
 enum HB_VERSION_STRING = "2.6.0";
 
-extern (D) auto HB_VERSION_ATLEAST(T0, T1, T2)(auto ref T0 major, auto ref T1 minor, auto ref T2 micro)
+extern (D) int HB_VERSION_ATLEAST(int major, int minor, int micro)
 {
     return major * 10000 + minor * 100 + micro <= HB_VERSION_MAJOR * 10000 + HB_VERSION_MINOR * 100 + HB_VERSION_MICRO;
 }
