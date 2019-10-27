@@ -30,7 +30,7 @@ To load the shared library, you need to call the `loadHarfBuzz` function. This r
 * a member of `HBSupport` indicating a version number that matches the version of HarfBuzz that `bindbc-harfbuzz` was configured at compile-time to load. By default, that is `HBSupport.hb26`, but can be configured via a version identifier (see below). This value will match the global manifest constant, `hbSupport`.
 
 ```d
-import bindbc.harfbuzz;
+import bindbc.hb;
 
 /*
 This version attempts to load the HarfBuzz shared library using well-known variations
