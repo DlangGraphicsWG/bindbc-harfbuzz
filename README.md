@@ -46,7 +46,7 @@ if(ret != hbSupport) {
     if(ret == HBSupport.noLibrary) {
         // HarfBuzz shared library failed to load
     }
-    else if(HBSupport.badLibrary) {
+    else if(ret == HBSupport.badLibrary) {
         // One or more symbols failed to load. The likely cause is that the
         // shared library is for a lower version than bindbc-harfbuzz was configured
         // to load (via HB_26, etc.)
