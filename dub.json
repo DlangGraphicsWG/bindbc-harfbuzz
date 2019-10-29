@@ -3,7 +3,7 @@
 	"authors": [ "Ahmet Sait Koçak" ],
 	"description": "Dynamic and static bindings to HarfBuzz, compatible with -betterC, @nogc, and nothrow.",
 	"copyright": "Copyright © 2019, Ahmet Sait Koçak",
-	"license": "MIT",
+	"license": "BSL-1.0",
 	"targetType": "staticLibrary",
 	"targetPath": "lib",
 	"configurations": [
