@@ -286,7 +286,7 @@ HBSupport loadHarfBuzz(const(char)* libName)
 	lib.bindSymbol(cast(void**)&hb_font_set_var_coords_design, "hb_font_set_var_coords_design");
 	lib.bindSymbol(cast(void**)&hb_font_set_var_coords_normalized, "hb_font_set_var_coords_normalized");
 	lib.bindSymbol(cast(void**)&hb_font_get_var_coords_normalized, "hb_font_get_var_coords_normalized");
-	lib.bindSymbol(cast(void**)&hb_font_set_var_named_instance, "hb_font_set_var_named_instance");
+	//lib.bindSymbol(cast(void**)&hb_font_set_var_named_instance, "hb_font_set_var_named_instance");
 
 	// bindbc.hb.bind.map
 	lib.bindSymbol(cast(void**)&hb_map_create, "hb_map_create");
@@ -382,6 +382,22 @@ HBSupport loadHarfBuzz(const(char)* libName)
 	lib.bindSymbol(cast(void**)&hb_version, "hb_version");
 	lib.bindSymbol(cast(void**)&hb_version_string, "hb_version_string");
 	lib.bindSymbol(cast(void**)&hb_version_atleast, "hb_version_atleast");
+
+	// bindbc.hb.bind.ft
+	{
+		import bindbc.hb.bind.ft;
+		lib.bindSymbol(cast(void**)&hb_ft_face_create, "hb_ft_face_create");
+		lib.bindSymbol(cast(void**)&hb_ft_face_create_cached, "hb_ft_face_create_cached");
+		lib.bindSymbol(cast(void**)&hb_ft_face_create_referenced, "hb_ft_face_create_referenced");
+		lib.bindSymbol(cast(void**)&hb_ft_font_create, "hb_ft_font_create");
+		lib.bindSymbol(cast(void**)&hb_ft_font_create_referenced, "hb_ft_font_create_referenced");
+		lib.bindSymbol(cast(void**)&hb_ft_font_get_face, "hb_ft_font_get_face");
+		lib.bindSymbol(cast(void**)&hb_ft_font_set_load_flags, "hb_ft_font_set_load_flags");
+		lib.bindSymbol(cast(void**)&hb_ft_font_get_load_flags, "hb_ft_font_get_load_flags");
+		lib.bindSymbol(cast(void**)&hb_ft_font_changed, "hb_ft_font_changed");
+		lib.bindSymbol(cast(void**)&hb_ft_font_set_funcs, "hb_ft_font_set_funcs");
+	}
+	
 
     loadedVersion = HBSupport.hb26;
 
