@@ -1,5 +1,5 @@
 
-//          Copyright Ahmet Sait 2019.
+//          Copyright Ahmet Sait 2020.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          https://www.boost.org/LICENSE_1_0.txt)
@@ -10,15 +10,18 @@ import bindbc.hb.bind.common;
 
 extern(C) @nogc nothrow:
 
-enum HB_VERSION_MAJOR = 2;
-enum HB_VERSION_MINOR = 6;
-enum HB_VERSION_MICRO = 0;
-
-enum HB_VERSION_STRING = "2.6.0";
-
-extern (D) int HB_VERSION_ATLEAST(int major, int minor, int micro)
+deprecated("Use bindbc.hb.config module instead.")
 {
-    return major * 10000 + minor * 100 + micro <= HB_VERSION_MAJOR * 10000 + HB_VERSION_MINOR * 100 + HB_VERSION_MICRO;
+	enum HB_VERSION_MAJOR = 2;
+	enum HB_VERSION_MINOR = 6;
+	enum HB_VERSION_MICRO = 4;
+
+	enum HB_VERSION_STRING = "2.6.4";
+
+	extern (D) int HB_VERSION_ATLEAST(int major, int minor, int micro)
+	{
+		return major * 10000 + minor * 100 + micro <= HB_VERSION_MAJOR * 10000 + HB_VERSION_MINOR * 100 + HB_VERSION_MICRO;
+	}
 }
 
 version(BindHB_Static)
@@ -44,5 +47,3 @@ else
     private alias fp_hb_version_atleast = hb_bool_t function (uint major, uint minor, uint micro);
     __gshared fp_hb_version_atleast hb_version_atleast;
 }
-
-/* HB_VERSION_H */

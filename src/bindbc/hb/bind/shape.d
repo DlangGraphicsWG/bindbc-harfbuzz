@@ -1,5 +1,5 @@
 
-//          Copyright Ahmet Sait 2019.
+//          Copyright Ahmet Sait 2020.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          https://www.boost.org/LICENSE_1_0.txt)
@@ -53,5 +53,3 @@ else
     private alias fp_hb_shape_list_shapers = const(char*)* function ();
     __gshared fp_hb_shape_list_shapers hb_shape_list_shapers;
 }
-
-/* HB_SHAPE_H */

@@ -1,10 +1,12 @@
 
-//          Copyright Ahmet Sait 2019.
+//          Copyright Ahmet Sait 2020.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          https://www.boost.org/LICENSE_1_0.txt)
- 
+
 module bindbc.hb.bind.blob;
+
+import bindbc.hb.config;
 
 import bindbc.hb.bind.common;
 
@@ -29,13 +31,14 @@ extern(C) @nogc nothrow:
  *   READONLY_MAY_MAKE_WRITABLE, however, using that mode
  *   correctly is very tricky.  Use MODE_READONLY instead.
  */
-enum hb_memory_mode_t
+enum : int
 {
     HB_MEMORY_MODE_DUPLICATE = 0,
     HB_MEMORY_MODE_READONLY = 1,
     HB_MEMORY_MODE_WRITABLE = 2,
     HB_MEMORY_MODE_READONLY_MAY_MAKE_WRITABLE = 3
 }
+alias hb_memory_mode_t = int;
 
 struct hb_blob_t;
 
@@ -57,12 +60,15 @@ else
     __gshared fp_hb_blob_create hb_blob_create;
 }
 
-version(BindHB_Static)
-    hb_blob_t* hb_blob_create_from_file (const(char)* file_name);
-else
+static if (hbSupport >= HBSupport.v2_6_3)
 {
-    private alias fp_hb_blob_create_from_file = hb_blob_t* function (const(char)* file_name);
-    __gshared fp_hb_blob_create_from_file hb_blob_create_from_file;
+	version(BindHB_Static)
+		hb_blob_t* hb_blob_create_from_file (const(char)* file_name);
+	else
+	{
+		private alias fp_hb_blob_create_from_file = hb_blob_t* function (const(char)* file_name);
+		__gshared fp_hb_blob_create_from_file hb_blob_create_from_file;
+	}
 }
 
 /* Always creates with MEMORY_MODE_READONLY.
@@ -85,12 +91,15 @@ else
     __gshared fp_hb_blob_create_sub_blob hb_blob_create_sub_blob;
 }
 
-version(BindHB_Static)
-    hb_blob_t* hb_blob_copy_writable_or_fail (hb_blob_t* blob);
-else
+static if (hbSupport >= HBSupport.v2_6_3)
 {
-    private alias fp_hb_blob_copy_writable_or_fail = hb_blob_t* function (hb_blob_t* blob);
-    __gshared fp_hb_blob_copy_writable_or_fail hb_blob_copy_writable_or_fail;
+	version(BindHB_Static)
+		hb_blob_t* hb_blob_copy_writable_or_fail (hb_blob_t* blob);
+	else
+	{
+		private alias fp_hb_blob_copy_writable_or_fail = hb_blob_t* function (hb_blob_t* blob);
+		__gshared fp_hb_blob_copy_writable_or_fail hb_blob_copy_writable_or_fail;
+	}
 }
 
 version(BindHB_Static)
@@ -182,5 +191,3 @@ else
     private alias fp_hb_blob_get_data_writable = char* function (hb_blob_t* blob, uint* length);
     __gshared fp_hb_blob_get_data_writable hb_blob_get_data_writable;
 }
-
-/* HB_BLOB_H */

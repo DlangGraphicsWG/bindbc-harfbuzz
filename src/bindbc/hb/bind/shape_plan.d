@@ -1,5 +1,5 @@
 
-//          Copyright Ahmet Sait 2019.
+//          Copyright Ahmet Sait 2020.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          https://www.boost.org/LICENSE_1_0.txt)
@@ -8,8 +8,8 @@ module bindbc.hb.bind.shape_plan;
 
 import bindbc.hb.bind.buffer;
 import bindbc.hb.bind.common;
-import bindbc.hb.bind.face;
 import bindbc.hb.bind.font;
+import bindbc.hb.bind.face;
 
 extern(C) @nogc nothrow:
 
@@ -174,5 +174,3 @@ else
     private alias fp_hb_shape_plan_get_shaper = const(char)* function (hb_shape_plan_t* shape_plan);
     __gshared fp_hb_shape_plan_get_shaper hb_shape_plan_get_shaper;
 }
-
-/* HB_SHAPE_PLAN_H */

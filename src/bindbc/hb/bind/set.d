@@ -1,10 +1,12 @@
 
-//          Copyright Ahmet Sait 2019.
+//          Copyright Ahmet Sait 2020.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          https://www.boost.org/LICENSE_1_0.txt)
 
 module bindbc.hb.bind.set;
+
+import bindbc.hb.config;
 
 import bindbc.hb.bind.common;
 
@@ -160,12 +162,15 @@ else
     __gshared fp_hb_set_is_equal hb_set_is_equal;
 }
 
-version(BindHB_Static)
-    hb_bool_t hb_set_is_subset (const(hb_set_t)* set, const(hb_set_t)* larger_set);
-else
+static if (hbSupport >= HBSupport.v2_6_3)
 {
-    private alias fp_hb_set_is_subset = hb_bool_t function (const(hb_set_t)* set, const(hb_set_t)* larger_set);
-    __gshared fp_hb_set_is_subset hb_set_is_subset;
+	version(BindHB_Static)
+		hb_bool_t hb_set_is_subset (const(hb_set_t)* set, const(hb_set_t)* larger_set);
+	else
+	{
+		private alias fp_hb_set_is_subset = hb_bool_t function (const(hb_set_t)* set, const(hb_set_t)* larger_set);
+		__gshared fp_hb_set_is_subset hb_set_is_subset;
+	}
 }
 
 version(BindHB_Static)
@@ -243,13 +248,16 @@ else
     __gshared fp_hb_set_next hb_set_next;
 }
 
-/* Pass HB_SET_VALUE_INVALID in to get started. */
-version(BindHB_Static)
-    hb_bool_t hb_set_previous (const(hb_set_t)* set, hb_codepoint_t* codepoint);
-else
+static if (hbSupport >= HBSupport.v2_6_3)
 {
-    private alias fp_hb_set_previous = hb_bool_t function (const(hb_set_t)* set, hb_codepoint_t* codepoint);
-    __gshared fp_hb_set_previous hb_set_previous;
+	/* Pass HB_SET_VALUE_INVALID in to get started. */
+	version(BindHB_Static)
+		hb_bool_t hb_set_previous (const(hb_set_t)* set, hb_codepoint_t* codepoint);
+	else
+	{
+		private alias fp_hb_set_previous = hb_bool_t function (const(hb_set_t)* set, hb_codepoint_t* codepoint);
+		__gshared fp_hb_set_previous hb_set_previous;
+	}
 }
 
 /* Pass HB_SET_VALUE_INVALID for first and last to get started. */
@@ -267,19 +275,20 @@ else
     __gshared fp_hb_set_next_range hb_set_next_range;
 }
 
-/* Pass HB_SET_VALUE_INVALID for first and last to get started. */
-version(BindHB_Static)
-    hb_bool_t hb_set_previous_range (
-        const(hb_set_t)* set,
-        hb_codepoint_t* first,
-        hb_codepoint_t* last);
-else
+static if (hbSupport >= HBSupport.v2_6_3)
 {
-    private alias fp_hb_set_previous_range = hb_bool_t function (
-        const(hb_set_t)* set,
-        hb_codepoint_t* first,
-        hb_codepoint_t* last);
-    __gshared fp_hb_set_previous_range hb_set_previous_range;
+	/* Pass HB_SET_VALUE_INVALID for first and last to get started. */
+	version(BindHB_Static)
+		hb_bool_t hb_set_previous_range (
+			const(hb_set_t)* set,
+			hb_codepoint_t* first,
+			hb_codepoint_t* last);
+	else
+	{
+		private alias fp_hb_set_previous_range = hb_bool_t function (
+			const(hb_set_t)* set,
+			hb_codepoint_t* first,
+			hb_codepoint_t* last);
+		__gshared fp_hb_set_previous_range hb_set_previous_range;
+	}
 }
-
-/* HB_SET_H */

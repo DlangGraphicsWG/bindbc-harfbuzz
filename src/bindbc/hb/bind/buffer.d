@@ -1,10 +1,12 @@
 
-//          Copyright Ahmet Sait 2019.
+//          Copyright Ahmet Sait 2020.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          https://www.boost.org/LICENSE_1_0.txt)
 
 module bindbc.hb.bind.buffer;
+
+import bindbc.hb.config;
 
 import bindbc.hb.bind.common;
 import bindbc.hb.bind.font;
@@ -65,25 +67,18 @@ struct hb_glyph_info_t
  *
  * Since: 1.5.0
  */
-enum hb_glyph_flags_t
+enum : uint
 {
     /*< flags >*/
     HB_GLYPH_FLAG_UNSAFE_TO_BREAK = 0x00000001,
 
     HB_GLYPH_FLAG_DEFINED = 0x00000001 /* OR of all defined flags */
 }
+alias hb_glyph_flags_t = uint;
 
-//version(BindHB_Static)
-//    hb_glyph_flags_t hb_glyph_info_get_glyph_flags (const(hb_glyph_info_t)* info);
-//else
-//{
-//    private alias fp_hb_glyph_info_get_glyph_flags = hb_glyph_flags_t function (const(hb_glyph_info_t)* info);
-//    __gshared fp_hb_glyph_info_get_glyph_flags hb_glyph_info_get_glyph_flags;
-//}
-
-extern (D) auto hb_glyph_info_get_glyph_flags(T)(auto ref T info)
+extern (D) hb_glyph_flags_t hb_glyph_info_get_glyph_flags(const(hb_glyph_info_t)* info)
 {
-    return cast(hb_glyph_flags_t) cast(uint) info.mask & hb_glyph_flags_t.HB_GLYPH_FLAG_DEFINED;
+    return cast(hb_glyph_flags_t) (cast(uint) info.mask & HB_GLYPH_FLAG_DEFINED);
 }
 
 /**
@@ -226,12 +221,13 @@ else
  * @HB_BUFFER_CONTENT_TYPE_UNICODE: The buffer contains input characters (before shaping).
  * @HB_BUFFER_CONTENT_TYPE_GLYPHS: The buffer contains output glyphs (after shaping).
  */
-enum hb_buffer_content_type_t
+enum : int
 {
     HB_BUFFER_CONTENT_TYPE_INVALID = 0,
     HB_BUFFER_CONTENT_TYPE_UNICODE = 1,
     HB_BUFFER_CONTENT_TYPE_GLYPHS = 2
 }
+alias hb_buffer_content_type_t = int;
 
 version(BindHB_Static)
     void hb_buffer_set_content_type (
@@ -384,7 +380,7 @@ else
  *
  * Since: 0.9.20
  */
-enum hb_buffer_flags_t
+enum : uint
 {
     /*< flags >*/
     HB_BUFFER_FLAG_DEFAULT = 0x00000000u,
@@ -394,6 +390,7 @@ enum hb_buffer_flags_t
     HB_BUFFER_FLAG_REMOVE_DEFAULT_IGNORABLES = 0x00000008u,
     HB_BUFFER_FLAG_DO_NOT_INSERT_DOTTED_CIRCLE = 0x00000010u
 }
+alias hb_buffer_flags_t = uint;
 
 version(BindHB_Static)
     void hb_buffer_set_flags (hb_buffer_t* buffer, hb_buffer_flags_t flags);
@@ -422,13 +419,14 @@ else
  *
  * Since: 0.9.42
  */
-enum hb_buffer_cluster_level_t
+enum : int
 {
     HB_BUFFER_CLUSTER_LEVEL_MONOTONE_GRAPHEMES = 0,
     HB_BUFFER_CLUSTER_LEVEL_MONOTONE_CHARACTERS = 1,
     HB_BUFFER_CLUSTER_LEVEL_CHARACTERS = 2,
     HB_BUFFER_CLUSTER_LEVEL_DEFAULT = HB_BUFFER_CLUSTER_LEVEL_MONOTONE_GRAPHEMES
 }
+alias hb_buffer_cluster_level_t = int;
 
 version(BindHB_Static)
     void hb_buffer_set_cluster_level (
@@ -480,24 +478,27 @@ else
     __gshared fp_hb_buffer_get_replacement_codepoint hb_buffer_get_replacement_codepoint;
 }
 
-version(BindHB_Static)
-    void hb_buffer_set_invisible_glyph (
-        hb_buffer_t* buffer,
-        hb_codepoint_t invisible);
-else
+static if (hbSupport >= HBSupport.v2_6_3)
 {
-    private alias fp_hb_buffer_set_invisible_glyph = void function (
-        hb_buffer_t* buffer,
-        hb_codepoint_t invisible);
-    __gshared fp_hb_buffer_set_invisible_glyph hb_buffer_set_invisible_glyph;
-}
-
-version(BindHB_Static)
-    hb_codepoint_t hb_buffer_get_invisible_glyph (hb_buffer_t* buffer);
-else
-{
-    private alias fp_hb_buffer_get_invisible_glyph = hb_codepoint_t function (hb_buffer_t* buffer);
-    __gshared fp_hb_buffer_get_invisible_glyph hb_buffer_get_invisible_glyph;
+	version(BindHB_Static)
+		void hb_buffer_set_invisible_glyph (
+			hb_buffer_t* buffer,
+			hb_codepoint_t invisible);
+	else
+	{
+		private alias fp_hb_buffer_set_invisible_glyph = void function (
+			hb_buffer_t* buffer,
+			hb_codepoint_t invisible);
+		__gshared fp_hb_buffer_set_invisible_glyph hb_buffer_set_invisible_glyph;
+	}
+	
+	version(BindHB_Static)
+		hb_codepoint_t hb_buffer_get_invisible_glyph (hb_buffer_t* buffer);
+	else
+	{
+		private alias fp_hb_buffer_get_invisible_glyph = hb_codepoint_t function (hb_buffer_t* buffer);
+		__gshared fp_hb_buffer_get_invisible_glyph hb_buffer_get_invisible_glyph;
+	}
 }
 
 version(BindHB_Static)
@@ -743,7 +744,7 @@ else
  *
  * Since: 0.9.20
  */
-enum hb_buffer_serialize_flags_t
+enum : uint
 {
     /*< flags >*/
     HB_BUFFER_SERIALIZE_FLAG_DEFAULT = 0x00000000u,
@@ -754,6 +755,7 @@ enum hb_buffer_serialize_flags_t
     HB_BUFFER_SERIALIZE_FLAG_GLYPH_FLAGS = 0x00000010u,
     HB_BUFFER_SERIALIZE_FLAG_NO_ADVANCES = 0x00000020u
 }
+alias hb_buffer_serialize_flags_t = uint;
 
 /**
  * hb_buffer_serialize_format_t:
@@ -766,12 +768,13 @@ enum hb_buffer_serialize_flags_t
  *
  * Since: 0.9.2
  */
-enum hb_buffer_serialize_format_t
+enum : hb_tag_t
 {
     HB_BUFFER_SERIALIZE_FORMAT_TEXT = HB_TAG('T', 'E', 'X', 'T'),
     HB_BUFFER_SERIALIZE_FORMAT_JSON = HB_TAG('J', 'S', 'O', 'N'),
     HB_BUFFER_SERIALIZE_FORMAT_INVALID = HB_TAG_NONE
 }
+alias hb_buffer_serialize_format_t = hb_tag_t;
 
 version(BindHB_Static)
     hb_buffer_serialize_format_t hb_buffer_serialize_format_from_string (
@@ -853,7 +856,7 @@ else
  * Compare buffers
  */
 
-enum hb_buffer_diff_flags_t
+enum : uint
 {
     /*< flags >*/
     HB_BUFFER_DIFF_FLAG_EQUAL = 0x0000,
@@ -880,6 +883,7 @@ enum hb_buffer_diff_flags_t
     HB_BUFFER_DIFF_FLAG_GLYPH_FLAGS_MISMATCH = 0x0040,
     HB_BUFFER_DIFF_FLAG_POSITION_MISMATCH = 0x0080
 }
+alias hb_buffer_diff_flags_t = uint;
 
 /* Compare the contents of two buffers, report types of differences. */
 version(BindHB_Static)
@@ -923,5 +927,3 @@ else
         hb_destroy_func_t destroy);
     __gshared fp_hb_buffer_set_message_func hb_buffer_set_message_func;
 }
-
-/* HB_BUFFER_H */

@@ -1,10 +1,12 @@
 
-//          Copyright Ahmet Sait 2019.
+//          Copyright Ahmet Sait 2020.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          https://www.boost.org/LICENSE_1_0.txt)
 
 module bindbc.hb.bind.face;
+
+import bindbc.hb.config;
 
 import bindbc.hb.bind.blob;
 import bindbc.hb.bind.common;
@@ -12,12 +14,15 @@ import bindbc.hb.bind.set;
 
 extern(C) @nogc nothrow:
 
-version(BindHB_Static)
-    uint hb_face_count (hb_blob_t* blob);
-else
+static if (hbSupport >= HBSupport.v2_6_3)
 {
-    private alias fp_hb_face_count = uint function (hb_blob_t* blob);
-    __gshared fp_hb_face_count hb_face_count;
+	version(BindHB_Static)
+		uint hb_face_count (hb_blob_t* blob);
+	else
+	{
+		private alias fp_hb_face_count = uint function (hb_blob_t* blob);
+		__gshared fp_hb_face_count hb_face_count;
+	}
 }
 
 /*
@@ -199,64 +204,65 @@ else
     __gshared fp_hb_face_get_table_tags hb_face_get_table_tags;
 }
 
-/*
- * Character set.
- */
-
-version(BindHB_Static)
-    void hb_face_collect_unicodes (hb_face_t* face, hb_set_t* out_);
-else
+static if (hbSupport >= HBSupport.v2_6_3)
 {
-    private alias fp_hb_face_collect_unicodes = void function (hb_face_t* face, hb_set_t* out_);
-    __gshared fp_hb_face_collect_unicodes hb_face_collect_unicodes;
+	/*
+	 * Character set.
+	 */
+
+	version(BindHB_Static)
+		void hb_face_collect_unicodes (hb_face_t* face, hb_set_t* out_);
+	else
+	{
+		private alias fp_hb_face_collect_unicodes = void function (hb_face_t* face, hb_set_t* out_);
+		__gshared fp_hb_face_collect_unicodes hb_face_collect_unicodes;
+	}
+
+	version(BindHB_Static)
+		void hb_face_collect_variation_selectors (hb_face_t* face, hb_set_t* out_);
+	else
+	{
+		private alias fp_hb_face_collect_variation_selectors = void function (hb_face_t* face, hb_set_t* out_);
+		__gshared fp_hb_face_collect_variation_selectors hb_face_collect_variation_selectors;
+	}
+
+	version(BindHB_Static)
+		void hb_face_collect_variation_unicodes (
+			hb_face_t* face,
+			hb_codepoint_t variation_selector,
+			hb_set_t* out_);
+	else
+	{
+		private alias fp_hb_face_collect_variation_unicodes = void function (
+			hb_face_t* face,
+			hb_codepoint_t variation_selector,
+			hb_set_t* out_);
+		__gshared fp_hb_face_collect_variation_unicodes hb_face_collect_variation_unicodes;
+	}
+
+	/*
+	 * Builder face.
+	 */
+
+	version(BindHB_Static)
+		hb_face_t* hb_face_builder_create ();
+	else
+	{
+		private alias fp_hb_face_builder_create = hb_face_t* function ();
+		__gshared fp_hb_face_builder_create hb_face_builder_create;
+	}
+
+	version(BindHB_Static)
+		hb_bool_t hb_face_builder_add_table (
+			hb_face_t* face,
+			hb_tag_t tag,
+			hb_blob_t* blob);
+	else
+	{
+		private alias fp_hb_face_builder_add_table = hb_bool_t function (
+			hb_face_t* face,
+			hb_tag_t tag,
+			hb_blob_t* blob);
+		__gshared fp_hb_face_builder_add_table hb_face_builder_add_table;
+	}
 }
-
-version(BindHB_Static)
-    void hb_face_collect_variation_selectors (hb_face_t* face, hb_set_t* out_);
-else
-{
-    private alias fp_hb_face_collect_variation_selectors = void function (hb_face_t* face, hb_set_t* out_);
-    __gshared fp_hb_face_collect_variation_selectors hb_face_collect_variation_selectors;
-}
-
-version(BindHB_Static)
-    void hb_face_collect_variation_unicodes (
-        hb_face_t* face,
-        hb_codepoint_t variation_selector,
-        hb_set_t* out_);
-else
-{
-    private alias fp_hb_face_collect_variation_unicodes = void function (
-        hb_face_t* face,
-        hb_codepoint_t variation_selector,
-        hb_set_t* out_);
-    __gshared fp_hb_face_collect_variation_unicodes hb_face_collect_variation_unicodes;
-}
-
-/*
- * Builder face.
- */
-
-version(BindHB_Static)
-    hb_face_t* hb_face_builder_create ();
-else
-{
-    private alias fp_hb_face_builder_create = hb_face_t* function ();
-    __gshared fp_hb_face_builder_create hb_face_builder_create;
-}
-
-version(BindHB_Static)
-    hb_bool_t hb_face_builder_add_table (
-        hb_face_t* face,
-        hb_tag_t tag,
-        hb_blob_t* blob);
-else
-{
-    private alias fp_hb_face_builder_add_table = hb_bool_t function (
-        hb_face_t* face,
-        hb_tag_t tag,
-        hb_blob_t* blob);
-    __gshared fp_hb_face_builder_add_table hb_face_builder_add_table;
-}
-
-/* HB_FACE_H */

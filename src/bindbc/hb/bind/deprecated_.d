@@ -1,17 +1,20 @@
 
-//          Copyright Ahmet Sait 2019.
+//          Copyright Ahmet Sait 2020.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          https://www.boost.org/LICENSE_1_0.txt)
 
 module bindbc.hb.bind.deprecated_;
 
-import bindbc.hb.bind.common;
+version(HB_with_deprecated):
+
 import bindbc.hb.bind.buffer;
+import bindbc.hb.bind.common;
 import bindbc.hb.bind.font;
 import bindbc.hb.bind.set;
 import bindbc.hb.bind.unicode;
 
+deprecated:
 extern(C) @nogc nothrow:
 
 /**
@@ -24,10 +27,10 @@ extern(C) @nogc nothrow:
  * were deemed unnecessary.
  **/
 
-// alias HB_SCRIPT_CANADIAN_ABORIGINAL = .HB_SCRIPT_CANADIAN_SYLLABICS;
+enum HB_SCRIPT_CANADIAN_ABORIGINAL = HB_SCRIPT_CANADIAN_SYLLABICS;
 
-// alias HB_BUFFER_FLAGS_DEFAULT = HB_BUFFER_FLAG_DEFAULT;
-// alias HB_BUFFER_SERIALIZE_FLAGS_DEFAULT = HB_BUFFER_SERIALIZE_FLAG_DEFAULT;
+enum HB_BUFFER_FLAGS_DEFAULT = HB_BUFFER_FLAG_DEFAULT;
+enum HB_BUFFER_SERIALIZE_FLAGS_DEFAULT = HB_BUFFER_SERIALIZE_FLAG_DEFAULT;
 
 alias hb_font_get_glyph_func_t = int function (
     hb_font_t* font,
@@ -237,5 +240,3 @@ else
         hb_codepoint_t bottom_glyph);
     __gshared fp_hb_font_get_glyph_v_kerning hb_font_get_glyph_v_kerning;
 }
-
-/* HB_DEPRECATED_H */

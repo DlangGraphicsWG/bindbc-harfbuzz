@@ -1,5 +1,5 @@
 
-//          Copyright Ahmet Sait 2019.
+//          Copyright Ahmet Sait 2020.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          https://www.boost.org/LICENSE_1_0.txt)
@@ -35,7 +35,7 @@ alias hb_var_int_t = _hb_var_int_t;
 
 alias hb_tag_t = uint;
 
-extern (D) auto HB_TAG(T0, T1, T2, T3)(auto ref T0 c1, auto ref T1 c2, auto ref T2 c3, auto ref T3 c4)
+extern (D) hb_tag_t HB_TAG(char c1, char c2, char c3, char c4)
 {
     return cast(hb_tag_t) ((cast(uint) c1 & 0xFF) << 24) | ((cast(uint) c2 & 0xFF) << 16) | ((cast(uint) c3 & 0xFF) << 8) | (cast(uint) c4 & 0xFF);
 }
@@ -70,7 +70,7 @@ else
  * @HB_DIRECTION_TTB: Text is set vertically from top to bottom.
  * @HB_DIRECTION_BTT: Text is set vertically from bottom to top.
  */
-enum hb_direction_t
+enum : int
 {
     HB_DIRECTION_INVALID = 0,
     HB_DIRECTION_LTR = 4,
@@ -78,6 +78,7 @@ enum hb_direction_t
     HB_DIRECTION_TTB = 6,
     HB_DIRECTION_BTT = 7
 }
+alias hb_direction_t = int;
 
 /* len=-1 means str is NUL-terminated */
 version(BindHB_Static)
@@ -96,35 +97,35 @@ else
     __gshared fp_hb_direction_to_string hb_direction_to_string;
 }
 
-extern (D) auto HB_DIRECTION_IS_VALID(T)(auto ref T dir)
+extern (D) hb_bool_t HB_DIRECTION_IS_VALID(uint dir)
 {
-    return ((cast(uint) dir) & ~3U) == 4;
+    return (dir & ~3U) == 4;
 }
 
 /* Direction must be valid for the following */
-extern (D) auto HB_DIRECTION_IS_HORIZONTAL(T)(auto ref T dir)
+extern (D) hb_bool_t HB_DIRECTION_IS_HORIZONTAL(uint dir)
 {
-    return ((cast(uint) dir) & ~1U) == 4;
+    return (dir & ~1U) == 4;
 }
 
-extern (D) auto HB_DIRECTION_IS_VERTICAL(T)(auto ref T dir)
+extern (D) hb_bool_t HB_DIRECTION_IS_VERTICAL(uint dir)
 {
-    return ((cast(uint) dir) & ~1U) == 6;
+    return (dir & ~1U) == 6;
 }
 
-extern (D) auto HB_DIRECTION_IS_FORWARD(T)(auto ref T dir)
+extern (D) hb_bool_t HB_DIRECTION_IS_FORWARD(uint dir)
 {
-    return ((cast(uint) dir) & ~2U) == 4;
+    return (dir & ~2U) == 4;
 }
 
-extern (D) auto HB_DIRECTION_IS_BACKWARD(T)(auto ref T dir)
+extern (D) hb_bool_t HB_DIRECTION_IS_BACKWARD(uint dir)
 {
-    return ((cast(uint) dir) & ~2U) == 5;
+    return (dir & ~2U) == 5;
 }
 
-extern (D) auto HB_DIRECTION_REVERSE(T)(auto ref T dir)
+extern (D) hb_direction_t HB_DIRECTION_REVERSE(uint dir)
 {
-    return cast(hb_direction_t) (cast(uint) dir) ^ 1;
+    return cast(hb_direction_t) (dir ^ 1);
 }
 
 /* hb_language_t */
@@ -163,7 +164,7 @@ else
 /* https://unicode.org/iso15924/ */
 /* https://docs.google.com/spreadsheets/d/1Y90M0Ie3MUJ6UVCRDOypOtijlMDLNNyyLk36T6iMu0o */
 /* Unicode Character Database property: Script (sc) */
-enum hb_script_t
+enum : hb_tag_t
 {
     /*1.1*/
     HB_SCRIPT_COMMON = HB_TAG('Z', 'y', 'y', 'y'),
@@ -520,6 +521,7 @@ enum hb_script_t
     _HB_SCRIPT_MAX_VALUE = HB_TAG_MAX_SIGNED, /*< skip >*/
     _HB_SCRIPT_MAX_VALUE_SIGNED = HB_TAG_MAX_SIGNED /*< skip >*/
 }
+alias hb_script_t = hb_tag_t;
 
 /* Script functions */
 
@@ -580,6 +582,21 @@ enum HB_FEATURE_GLOBAL_START = 0;
  */
 enum HB_FEATURE_GLOBAL_END = cast(uint) -1;
 
+/**
+ * hb_feature_t:
+ * @tag: a feature tag
+ * @value: 0 disables the feature, non-zero (usually 1) enables the feature.
+ * For features implemented as lookup type 3 (like 'salt') the @value is a one
+ * based index into the alternates.
+ * @start: the cluster to start applying this feature setting (inclusive).
+ * @end: the cluster to end applying this feature setting (exclusive).
+ *
+ * The #hb_feature_t is the structure that holds information about requested
+ * feature application. The feature will be applied with the given value to all
+ * glyphs which are in clusters between @start (inclusive) and @end (exclusive).
+ * Setting start to @HB_FEATURE_GLOBAL_START and end to @HB_FEATURE_GLOBAL_END
+ * specifies that the feature always applies to the entire buffer.
+ */
 struct hb_feature_t
 {
     hb_tag_t tag;
@@ -652,61 +669,27 @@ else
  */
 alias hb_color_t = uint;
 
-extern (D) auto HB_COLOR(T0, T1, T2, T3)(auto ref T0 b, auto ref T1 g, auto ref T2 r, auto ref T3 a)
+extern (D) hb_color_t HB_COLOR(ubyte b, ubyte g, ubyte r, ubyte a)
 {
     return cast(hb_color_t) HB_TAG(b, g, r, a);
 }
 
-//version(BindHB_Static)
-//    ubyte hb_color_get_alpha (hb_color_t color);
-//else
-//{
-//    private alias fp_hb_color_get_alpha = ubyte function (hb_color_t color);
-//    __gshared fp_hb_color_get_alpha hb_color_get_alpha;
-//}
-
-extern (D) auto hb_color_get_alpha(T)(auto ref T color)
+extern (D) ubyte hb_color_get_alpha(hb_color_t color)
 {
     return color & 0xFF;
 }
 
-//version(BindHB_Static)
-//    ubyte hb_color_get_red (hb_color_t color);
-//else
-//{
-//    private alias fp_hb_color_get_red = ubyte function (hb_color_t color);
-//    __gshared fp_hb_color_get_red hb_color_get_red;
-//}
-
-extern (D) auto hb_color_get_red(T)(auto ref T color)
+extern (D) ubyte hb_color_get_red(hb_color_t color)
 {
     return (color >> 8) & 0xFF;
 }
 
-//version(BindHB_Static)
-//    ubyte hb_color_get_green (hb_color_t color);
-//else
-//{
-//    private alias fp_hb_color_get_green = ubyte function (hb_color_t color);
-//    __gshared fp_hb_color_get_green hb_color_get_green;
-//}
-
-extern (D) auto hb_color_get_green(T)(auto ref T color)
+extern (D) ubyte hb_color_get_green(hb_color_t color)
 {
     return (color >> 16) & 0xFF;
 }
 
-//version(BindHB_Static)
-//    ubyte hb_color_get_blue (hb_color_t color);
-//else
-//{
-//    private alias fp_hb_color_get_blue = ubyte function (hb_color_t color);
-//    __gshared fp_hb_color_get_blue hb_color_get_blue;
-//}
-
-extern (D) auto hb_color_get_blue(T)(auto ref T color)
+extern (D) ubyte hb_color_get_blue(hb_color_t color)
 {
     return (color >> 24) & 0xFF;
 }
-
-/* HB_COMMON_H */

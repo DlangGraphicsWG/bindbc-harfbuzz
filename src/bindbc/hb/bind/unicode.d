@@ -1,5 +1,5 @@
 
-//          Copyright Ahmet Sait 2019.
+//          Copyright Ahmet Sait 2020.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          https://www.boost.org/LICENSE_1_0.txt)
@@ -20,7 +20,7 @@ enum HB_UNICODE_MAX = 0x10FFFFu;
 /* hb_unicode_general_category_t */
 
 /* Unicode Character Database property: General_Category (gc) */
-enum hb_unicode_general_category_t
+enum : int
 {
     HB_UNICODE_GENERAL_CATEGORY_CONTROL = 0, /* Cc */
     HB_UNICODE_GENERAL_CATEGORY_FORMAT = 1, /* Cf */
@@ -53,6 +53,7 @@ enum hb_unicode_general_category_t
     HB_UNICODE_GENERAL_CATEGORY_PARAGRAPH_SEPARATOR = 28, /* Zp */
     HB_UNICODE_GENERAL_CATEGORY_SPACE_SEPARATOR = 29 /* Zs */
 }
+alias hb_unicode_general_category_t = int;
 
 /* hb_unicode_combining_class_t */
 
@@ -61,7 +62,7 @@ enum hb_unicode_general_category_t
  */
 
 /* Unicode Character Database property: Canonical_Combining_Class (ccc) */
-enum hb_unicode_combining_class_t
+enum : int
 {
     HB_UNICODE_COMBINING_CLASS_NOT_REORDERED = 0,
     HB_UNICODE_COMBINING_CLASS_OVERLAY = 1,
@@ -138,6 +139,7 @@ enum hb_unicode_combining_class_t
 
     HB_UNICODE_COMBINING_CLASS_INVALID = 255
 }
+alias hb_unicode_combining_class_t = int;
 
 /*
  * hb_unicode_funcs_t
@@ -256,7 +258,7 @@ alias hb_unicode_general_category_func_t = hb_unicode_general_category_t functio
     hb_unicode_funcs_t* ufuncs,
     hb_codepoint_t unicode,
     void* user_data);
-alias hb_unicode_mirroring_func_t = uint function (
+alias hb_unicode_mirroring_func_t = hb_codepoint_t function (
     hb_unicode_funcs_t* ufuncs,
     hb_codepoint_t unicode,
     void* user_data);
@@ -265,13 +267,13 @@ alias hb_unicode_script_func_t = hb_script_t function (
     hb_codepoint_t unicode,
     void* user_data);
 
-alias hb_unicode_compose_func_t = int function (
+alias hb_unicode_compose_func_t = hb_bool_t function (
     hb_unicode_funcs_t* ufuncs,
     hb_codepoint_t a,
     hb_codepoint_t b,
     hb_codepoint_t* ab,
     void* user_data);
-alias hb_unicode_decompose_func_t = int function (
+alias hb_unicode_decompose_func_t = hb_bool_t function (
     hb_unicode_funcs_t* ufuncs,
     hb_codepoint_t ab,
     hb_codepoint_t* a,
@@ -543,5 +545,3 @@ else
         hb_codepoint_t* b);
     __gshared fp_hb_unicode_decompose hb_unicode_decompose;
 }
-
-/* HB_UNICODE_H */

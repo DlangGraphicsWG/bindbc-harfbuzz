@@ -1,10 +1,12 @@
 
-//          Copyright Ahmet Sait 2019.
+//          Copyright Ahmet Sait 2020.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          https://www.boost.org/LICENSE_1_0.txt)
 
 module bindbc.hb.bind.font;
+
+import bindbc.hb.config;
 
 import bindbc.hb.bind.common;
 import bindbc.hb.bind.face;
@@ -313,31 +315,34 @@ else
     __gshared fp_hb_font_funcs_set_nominal_glyph_func hb_font_funcs_set_nominal_glyph_func;
 }
 
-/**
- * hb_font_funcs_set_nominal_glyphs_func:
- * @ffuncs: font functions.
- * @func: (closure user_data) (destroy destroy) (scope notified):
- * @user_data:
- * @destroy:
- *
- *
- *
- * Since: 2.0.0
- **/
-version(BindHB_Static)
-    void hb_font_funcs_set_nominal_glyphs_func (
-        hb_font_funcs_t* ffuncs,
-        hb_font_get_nominal_glyphs_func_t func,
-        void* user_data,
-        hb_destroy_func_t destroy);
-else
+static if (hbSupport >= 20000)
 {
-    private alias fp_hb_font_funcs_set_nominal_glyphs_func = void function (
-        hb_font_funcs_t* ffuncs,
-        hb_font_get_nominal_glyphs_func_t func,
-        void* user_data,
-        hb_destroy_func_t destroy);
-    __gshared fp_hb_font_funcs_set_nominal_glyphs_func hb_font_funcs_set_nominal_glyphs_func;
+	/**
+	 * hb_font_funcs_set_nominal_glyphs_func:
+	 * @ffuncs: font functions.
+	 * @func: (closure user_data) (destroy destroy) (scope notified):
+	 * @user_data:
+	 * @destroy:
+	 *
+	 *
+	 *
+	 * Since: 2.0.0
+	 **/
+	version(BindHB_Static)
+		void hb_font_funcs_set_nominal_glyphs_func (
+			hb_font_funcs_t* ffuncs,
+			hb_font_get_nominal_glyphs_func_t func,
+			void* user_data,
+			hb_destroy_func_t destroy);
+	else
+	{
+		private alias fp_hb_font_funcs_set_nominal_glyphs_func = void function (
+			hb_font_funcs_t* ffuncs,
+			hb_font_get_nominal_glyphs_func_t func,
+			void* user_data,
+			hb_destroy_func_t destroy);
+		__gshared fp_hb_font_funcs_set_nominal_glyphs_func hb_font_funcs_set_nominal_glyphs_func;
+	}
 }
 
 /**
@@ -421,58 +426,61 @@ else
     __gshared fp_hb_font_funcs_set_glyph_v_advance_func hb_font_funcs_set_glyph_v_advance_func;
 }
 
-/**
- * hb_font_funcs_set_glyph_h_advances_func:
- * @ffuncs: font functions.
- * @func: (closure user_data) (destroy destroy) (scope notified):
- * @user_data:
- * @destroy:
- *
- *
- *
- * Since: 1.8.6
- **/
-version(BindHB_Static)
-    void hb_font_funcs_set_glyph_h_advances_func (
-        hb_font_funcs_t* ffuncs,
-        hb_font_get_glyph_h_advances_func_t func,
-        void* user_data,
-        hb_destroy_func_t destroy);
-else
+static if (hbSupport >= 10806)
 {
-    private alias fp_hb_font_funcs_set_glyph_h_advances_func = void function (
-        hb_font_funcs_t* ffuncs,
-        hb_font_get_glyph_h_advances_func_t func,
-        void* user_data,
-        hb_destroy_func_t destroy);
-    __gshared fp_hb_font_funcs_set_glyph_h_advances_func hb_font_funcs_set_glyph_h_advances_func;
-}
+	/**
+	 * hb_font_funcs_set_glyph_h_advances_func:
+	 * @ffuncs: font functions.
+	 * @func: (closure user_data) (destroy destroy) (scope notified):
+	 * @user_data:
+	 * @destroy:
+	 *
+	 *
+	 *
+	 * Since: 1.8.6
+	 **/
+	version(BindHB_Static)
+		void hb_font_funcs_set_glyph_h_advances_func (
+			hb_font_funcs_t* ffuncs,
+			hb_font_get_glyph_h_advances_func_t func,
+			void* user_data,
+			hb_destroy_func_t destroy);
+	else
+	{
+		private alias fp_hb_font_funcs_set_glyph_h_advances_func = void function (
+			hb_font_funcs_t* ffuncs,
+			hb_font_get_glyph_h_advances_func_t func,
+			void* user_data,
+			hb_destroy_func_t destroy);
+		__gshared fp_hb_font_funcs_set_glyph_h_advances_func hb_font_funcs_set_glyph_h_advances_func;
+	}
 
-/**
- * hb_font_funcs_set_glyph_v_advances_func:
- * @ffuncs: font functions.
- * @func: (closure user_data) (destroy destroy) (scope notified):
- * @user_data:
- * @destroy:
- *
- *
- *
- * Since: 1.8.6
- **/
-version(BindHB_Static)
-    void hb_font_funcs_set_glyph_v_advances_func (
-        hb_font_funcs_t* ffuncs,
-        hb_font_get_glyph_v_advances_func_t func,
-        void* user_data,
-        hb_destroy_func_t destroy);
-else
-{
-    private alias fp_hb_font_funcs_set_glyph_v_advances_func = void function (
-        hb_font_funcs_t* ffuncs,
-        hb_font_get_glyph_v_advances_func_t func,
-        void* user_data,
-        hb_destroy_func_t destroy);
-    __gshared fp_hb_font_funcs_set_glyph_v_advances_func hb_font_funcs_set_glyph_v_advances_func;
+	/**
+	 * hb_font_funcs_set_glyph_v_advances_func:
+	 * @ffuncs: font functions.
+	 * @func: (closure user_data) (destroy destroy) (scope notified):
+	 * @user_data:
+	 * @destroy:
+	 *
+	 *
+	 *
+	 * Since: 1.8.6
+	 **/
+	version(BindHB_Static)
+		void hb_font_funcs_set_glyph_v_advances_func (
+			hb_font_funcs_t* ffuncs,
+			hb_font_get_glyph_v_advances_func_t func,
+			void* user_data,
+			hb_destroy_func_t destroy);
+	else
+	{
+		private alias fp_hb_font_funcs_set_glyph_v_advances_func = void function (
+			hb_font_funcs_t* ffuncs,
+			hb_font_get_glyph_v_advances_func_t func,
+			void* user_data,
+			hb_destroy_func_t destroy);
+		__gshared fp_hb_font_funcs_set_glyph_v_advances_func hb_font_funcs_set_glyph_v_advances_func;
+	}
 }
 
 /**
@@ -710,6 +718,29 @@ else
     __gshared fp_hb_font_get_variation_glyph hb_font_get_variation_glyph;
 }
 
+static if (hbSupport >= HBSupport.v2_6_3)
+{
+	version(BindHB_Static)
+		uint hb_font_get_nominal_glyphs (
+			hb_font_t* font,
+			uint count,
+			const(hb_codepoint_t)* first_unicode,
+			uint unicode_stride,
+			hb_codepoint_t* first_glyph,
+			uint glyph_stride);
+	else
+	{
+		private alias fp_hb_font_get_nominal_glyphs = uint function (
+			hb_font_t* font,
+			uint count,
+			const(hb_codepoint_t)* first_unicode,
+			uint unicode_stride,
+			hb_codepoint_t* first_glyph,
+			uint glyph_stride);
+		__gshared fp_hb_font_get_nominal_glyphs hb_font_get_nominal_glyphs;
+	}
+}
+
 version(BindHB_Static)
     hb_position_t hb_font_get_glyph_h_advance (
         hb_font_t* font,
@@ -733,43 +764,47 @@ else
     __gshared fp_hb_font_get_glyph_v_advance hb_font_get_glyph_v_advance;
 }
 
-version(BindHB_Static)
-    void hb_font_get_glyph_h_advances (
-        hb_font_t* font,
-        uint count,
-        const(hb_codepoint_t)* first_glyph,
-        uint glyph_stride,
-        hb_position_t* first_advance,
-        uint advance_stride);
-else
+static if (hbSupport >= HBSupport.v2_6_3)
 {
-    private alias fp_hb_font_get_glyph_h_advances = void function (
-        hb_font_t* font,
-        uint count,
-        const(hb_codepoint_t)* first_glyph,
-        uint glyph_stride,
-        hb_position_t* first_advance,
-        uint advance_stride);
-    __gshared fp_hb_font_get_glyph_h_advances hb_font_get_glyph_h_advances;
-}
-version(BindHB_Static)
-    void hb_font_get_glyph_v_advances (
-        hb_font_t* font,
-        uint count,
-        const(hb_codepoint_t)* first_glyph,
-        uint glyph_stride,
-        hb_position_t* first_advance,
-        uint advance_stride);
-else
-{
-    private alias fp_hb_font_get_glyph_v_advances = void function (
-        hb_font_t* font,
-        uint count,
-        const(hb_codepoint_t)* first_glyph,
-        uint glyph_stride,
-        hb_position_t* first_advance,
-        uint advance_stride);
-    __gshared fp_hb_font_get_glyph_v_advances hb_font_get_glyph_v_advances;
+	version(BindHB_Static)
+		void hb_font_get_glyph_h_advances (
+			hb_font_t* font,
+			uint count,
+			const(hb_codepoint_t)* first_glyph,
+			uint glyph_stride,
+			hb_position_t* first_advance,
+			uint advance_stride);
+	else
+	{
+		private alias fp_hb_font_get_glyph_h_advances = void function (
+			hb_font_t* font,
+			uint count,
+			const(hb_codepoint_t)* first_glyph,
+			uint glyph_stride,
+			hb_position_t* first_advance,
+			uint advance_stride);
+		__gshared fp_hb_font_get_glyph_h_advances hb_font_get_glyph_h_advances;
+	}
+	
+	version(BindHB_Static)
+		void hb_font_get_glyph_v_advances (
+			hb_font_t* font,
+			uint count,
+			const(hb_codepoint_t)* first_glyph,
+			uint glyph_stride,
+			hb_position_t* first_advance,
+			uint advance_stride);
+	else
+	{
+		private alias fp_hb_font_get_glyph_v_advances = void function (
+			hb_font_t* font,
+			uint count,
+			const(hb_codepoint_t)* first_glyph,
+			uint glyph_stride,
+			hb_position_t* first_advance,
+			uint advance_stride);
+		__gshared fp_hb_font_get_glyph_v_advances hb_font_get_glyph_v_advances;
+	}
 }
 
 version(BindHB_Static)
@@ -932,27 +967,32 @@ else
         hb_position_t* y);
     __gshared fp_hb_font_get_glyph_advance_for_direction hb_font_get_glyph_advance_for_direction;
 }
-version(BindHB_Static)
-    void hb_font_get_glyph_advances_for_direction (
-        hb_font_t* font,
-        hb_direction_t direction,
-        uint count,
-        const(hb_codepoint_t)* first_glyph,
-        uint glyph_stride,
-        hb_position_t* first_advance,
-        uint advance_stride);
-else
+
+static if (hbSupport >= HBSupport.v2_6_3)
 {
-    private alias fp_hb_font_get_glyph_advances_for_direction = void function (
-        hb_font_t* font,
-        hb_direction_t direction,
-        uint count,
-        const(hb_codepoint_t)* first_glyph,
-        uint glyph_stride,
-        hb_position_t* first_advance,
-        uint advance_stride);
-    __gshared fp_hb_font_get_glyph_advances_for_direction hb_font_get_glyph_advances_for_direction;
+	version(BindHB_Static)
+		void hb_font_get_glyph_advances_for_direction (
+			hb_font_t* font,
+			hb_direction_t direction,
+			uint count,
+			const(hb_codepoint_t)* first_glyph,
+			uint glyph_stride,
+			hb_position_t* first_advance,
+			uint advance_stride);
+	else
+	{
+		private alias fp_hb_font_get_glyph_advances_for_direction = void function (
+			hb_font_t* font,
+			hb_direction_t direction,
+			uint count,
+			const(hb_codepoint_t)* first_glyph,
+			uint glyph_stride,
+			hb_position_t* first_advance,
+			uint advance_stride);
+		__gshared fp_hb_font_get_glyph_advances_for_direction hb_font_get_glyph_advances_for_direction;
+	}
 }
+
 version(BindHB_Static)
     void hb_font_get_glyph_origin_for_direction (
         hb_font_t* font,
@@ -1353,12 +1393,13 @@ else
     __gshared fp_hb_font_get_var_coords_normalized hb_font_get_var_coords_normalized;
 }
 
-version(BindHB_Static)
-    void hb_font_set_var_named_instance (hb_font_t* font, uint instance_index);
-else
+static if (hbSupport >= HBSupport.v2_6_3)
 {
-    private alias fp_hb_font_set_var_named_instance = void function (hb_font_t* font, uint instance_index);
-    __gshared fp_hb_font_set_var_named_instance hb_font_set_var_named_instance;
+	version(BindHB_Static)
+		void hb_font_set_var_named_instance (hb_font_t* font, uint instance_index);
+	else
+	{
+		private alias fp_hb_font_set_var_named_instance = void function (hb_font_t* font, uint instance_index);
+		__gshared fp_hb_font_set_var_named_instance hb_font_set_var_named_instance;
+	}
 }
-
-/* HB_FONT_H */
