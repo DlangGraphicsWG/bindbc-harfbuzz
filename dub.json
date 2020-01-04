@@ -5,23 +5,25 @@
 	"copyright": "Copyright © 2019, Ahmet Sait",
 	"license": "BSL-1.0",
 	"targetType": "staticLibrary",
-	"targetPath": "bin",
+	"targetPath": "bin-$ARCH",
+	"sourcePaths": ["src"],
+	"importPaths": ["src"],
 	"configurations": [
 		{
 			"name": "dynamic",
 			"dependencies": {
-				"bindbc-loader": "~>0.2.1"
-			}
+				"bindbc-loader": "~>0.2.1",
+			},
 		},
 		{
 			"name": "dynamicBC",
 			"dependencies": {
-				"bindbc-loader": "~>0.2.1"
+				"bindbc-loader": "~>0.2.1",
 			},
 			"buildOptions": ["betterC"],
 			"subConfigurations": {
 				"bindbc-loader": "yesBC"
-			}
+			},
 		},
 		{
 			"name": "static",
@@ -31,8 +33,60 @@
 		{
 			"name": "staticBC",
 			"versions": [ "BindHB_Static" ],
+			"buildOptions": ["betterC"],
 			"excludedSourceFiles": [ "source/bindbc/sdl/dynload.d" ],
-			"buildOptions": ["betterC"]
-		}
-	]
+		},
+		{
+			"name": "test_dynamic",
+			"targetType": "executable",
+			"targetPath": "bin-test_dynamic-$ARCH",
+			"buildOptions": ["unittests", "debugMode", "debugInfo"],
+			"sourcePaths": ["test"],
+			"mainSourceFile": "test/app.d",
+			"copyFiles-windows-x86": ["lib/*.dll"],
+			"copyFiles-windows-x86_64": ["lib64/*.dll"],
+			"versions": [
+				"HB_2_6_3",
+				"HB_with_deprecated",
+				"HB_with_freetype",
+				"HB_with_subset",
+			],
+			"versions-windows": [
+				"HB_with_uniscribe",
+			],
+			"dependencies": {
+				"bindbc-loader": "~>0.2.1",
+				"aurora-directx": "~>12.1.1",
+				"bindbc-freetype": "~>0.8.0",
+			},
+		},
+		{
+			"name": "test_static",
+			"targetType": "executable",
+			"targetPath": "bin-test_static-$ARCH",
+			"buildOptions": ["unittests", "debugMode", "debugInfo"],
+			"sourcePaths": ["test"],
+			"mainSourceFile": "test/app.d",
+			"excludedSourceFiles": [ "source/bindbc/sdl/dynload.d" ],
+			"libs-windows-x86": [ "lib/libharfbuzz-0" ],
+			"libs-windows-x86_64": [ "lib64/libharfbuzz-0" ],
+			"copyFiles-windows-x86": ["lib/*.dll"],
+			"copyFiles-windows-x86_64": ["lib64/*.dll"],
+			"versions": [
+				"BindHB_Static",
+				"HB_2_6_3",
+				"HB_with_deprecated",
+				"HB_with_freetype",
+				"HB_with_subset",
+			],
+			"versions-windows": [
+				"HB_with_uniscribe",
+			],
+			"dependencies": {
+				"bindbc-loader": "~>0.2.1",
+				"aurora-directx": "~>12.1.1",
+				"bindbc-freetype": "~>0.8.0",
+			},
+		},
+	],
 }
