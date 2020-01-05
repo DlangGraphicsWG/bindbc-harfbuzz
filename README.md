@@ -1,4 +1,6 @@
 # bindbc-harfbuzz
+**Note: This is an unofficial bindbc package, please don't contact Mike for help.**
+
 This project provides both static and dynamic bindings to the [HarfBuzz library](https://github.com/harfbuzz/harfbuzz). They are `@nogc` and `nothrow` compatible can be compiled for compatibility with `-betterC`.
 
 ## Usage
