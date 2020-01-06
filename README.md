@@ -1,4 +1,4 @@
-# bindbc-harfbuzz
+# bindbc-harfbuzz [![DUB](https://img.shields.io/dub/v/bindbc-harfbuzz)](https://code.dlang.org/packages/bindbc-harfbuzz) [![DUB](https://img.shields.io/dub/l/bindbc-harfbuzz)](https://github.com/DlangGraphicsWG/bindbc-harfbuzz/blob/master/LICENSE_1_0.txt)
 **Note: This is an unofficial bindbc package, please don't contact Mike for help.**
 
 This project provides both static and dynamic bindings to the [HarfBuzz library](https://github.com/harfbuzz/harfbuzz). They are `@nogc` and `nothrow` compatible can be compiled for compatibility with `-betterC`.
