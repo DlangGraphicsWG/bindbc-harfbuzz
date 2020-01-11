@@ -9,6 +9,8 @@ module bindbc.hb.dynload;
 version(BindHB_Static) {}
 else:
 
+nothrow @nogc:
+
 import bindbc.loader;
 import bindbc.hb.config;
 
