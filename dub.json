@@ -5,7 +5,7 @@
 	"copyright": "Copyright © 2019, Ahmet Sait",
 	"license": "BSL-1.0",
 	"targetType": "staticLibrary",
-	"targetPath": "bin-$ARCH",
+	"targetPath": "bin/$BUILD_TYPE-$ARCH",
 	"sourcePaths": ["src"],
 	"importPaths": ["src"],
 	"configurations": [
@@ -39,7 +39,7 @@
 		{
 			"name": "test_dynamic",
 			"targetType": "executable",
-			"targetPath": "bin-test_dynamic-$ARCH",
+			"targetPath": "bin/test_dynamic-$ARCH",
 			"buildOptions": ["unittests", "debugMode", "debugInfo"],
 			"sourcePaths": ["test"],
 			"mainSourceFile": "test/app.d",
@@ -56,20 +56,26 @@
 			],
 			"dependencies": {
 				"bindbc-loader": "~>0.2.1",
-				"aurora-directx": "~>12.1.1",
 				"bindbc-freetype": "~>0.8.0",
+				"aurora-directx": "~>12.1.1",
 			},
 		},
 		{
 			"name": "test_static",
 			"targetType": "executable",
-			"targetPath": "bin-test_static-$ARCH",
+			"targetPath": "bin/test_static-$ARCH",
 			"buildOptions": ["unittests", "debugMode", "debugInfo"],
 			"sourcePaths": ["test"],
 			"mainSourceFile": "test/app.d",
 			"excludedSourceFiles": [ "source/bindbc/sdl/dynload.d" ],
-			"libs-windows-x86": [ "lib/libharfbuzz-0" ],
-			"libs-windows-x86_64": [ "lib64/libharfbuzz-0" ],
+			"libs-windows-x86": [
+				"lib/libharfbuzz-0",
+				"lib/freetype",
+			],
+			"libs-windows-x86_64": [
+				"lib64/libharfbuzz-0",
+				"lib64/freetype",
+			],
 			"copyFiles-windows-x86": ["lib/*.dll"],
 			"copyFiles-windows-x86_64": ["lib64/*.dll"],
 			"versions": [
@@ -84,8 +90,8 @@
 			],
 			"dependencies": {
 				"bindbc-loader": "~>0.2.1",
-				"aurora-directx": "~>12.1.1",
 				"bindbc-freetype": "~>0.8.0",
+				"aurora-directx": "~>12.1.1",
 			},
 		},
 	],
