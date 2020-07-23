@@ -602,7 +602,7 @@ else
 {
     private alias fp_hb_buffer_add_utf16 = void function (
         hb_buffer_t* buffer,
-        const(ushort)* text,
+        const(wchar)* text,
         int text_length,
         uint item_offset,
         int item_length);
@@ -620,7 +620,7 @@ else
 {
     private alias fp_hb_buffer_add_utf32 = void function (
         hb_buffer_t* buffer,
-        const(uint)* text,
+        const(dchar)* text,
         int text_length,
         uint item_offset,
         int item_length);
