@@ -1,0 +1,49 @@
+{
+	"name": "bindbc-harfbuzz-test",
+	"authors": [ "Ahmet Sait" ],
+	"copyright": "Copyright © 2020, Ahmet Sait",
+	"license": "BSL-1.0",
+	"targetType": "executable",
+	"targetPath": "bin/$BUILD_TYPE-$ARCH",
+	"sourcePaths": ["src"],
+	"importPaths": ["src"],
+	"mainSourceFile": "src/app.d",
+	"copyFiles-windows-x86": ["lib/*.dll"],
+	"copyFiles-windows-x86_64": ["lib64/*.dll"],
+	"dependencies": {
+		"bindbc-freetype": "~>0.8.0",
+		"aurora-directx": "~>12.1.1",
+		"bindbc-harfbuzz": { "path": "../" },
+	},
+	"versions": [
+		"FT_210",
+		"HB_2_6_3",
+		"HB_with_deprecated",
+		"HB_with_freetype",
+		"HB_with_subset",
+	],
+	"versions-windows": [
+		"HB_with_uniscribe",
+	],
+	"configurations": [
+		{
+			"name": "dynamic",
+		},
+		{
+			"name": "static",
+			"versions": [
+				"BindHB_Static",
+			],
+			"libs-windows-x86": [
+				"lib/libharfbuzz-0",
+				"lib/libharfbuzz-subset-0",
+				"lib/freetype",
+			],
+			"libs-windows-x86_64": [
+				"lib64/libharfbuzz-0",
+				"lib64/libharfbuzz-subset-0",
+				"lib64/freetype",
+			],
+		},
+	],
+}
