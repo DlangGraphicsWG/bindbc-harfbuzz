@@ -1,10 +1,10 @@
 # bindbc-harfbuzz [![DUB](https://img.shields.io/dub/v/bindbc-harfbuzz)](https://code.dlang.org/packages/bindbc-harfbuzz) [![DUB](https://img.shields.io/dub/l/bindbc-harfbuzz)](https://github.com/DlangGraphicsWG/bindbc-harfbuzz/blob/master/LICENSE_1_0.txt)
 **Note: This is an unofficial bindbc package, please don't contact Mike for help.**
 
-This project provides both static and dynamic bindings to the [HarfBuzz library](https://github.com/harfbuzz/harfbuzz). They are `@nogc` and `nothrow` compatible can be compiled for compatibility with `-betterC`.
+This project provides both static and dynamic bindings to the [HarfBuzz library](https://github.com/harfbuzz/harfbuzz). They are `@nogc` and `nothrow` compatible and can be compiled with `-betterC` compiler switch.
 
 ## Usage
-By default, `bindbc-harfbuzz` is configured to compile as a dynamic binding that is not `-betterC` compatible. The dynamic binding has no link-time dependency on the HarfBuzz library, so the HarfBuzz shared library must be manually loaded at runtime. When configured as a static binding, there is a link-time dependency on the HarfBuzz library---either the static library or the appropriate file for linking with shared libraries on your platform (see below).
+By default, `bindbc-harfbuzz` is configured to compile as a dynamic binding that is not `-betterC` compatible. The dynamic binding has no link-time dependency on the HarfBuzz library, so the HarfBuzz shared library must be manually loaded at runtime. When configured as a static binding, there is a link-time dependency on the HarfBuzz library; either the static library or the appropriate file for linking with shared libraries on your platform (see below).
 
 When using DUB to manage your project, the static binding can be enabled via a DUB `subConfiguration` statement in your project's package file. `-betterC` compatibility is also enabled via subconfigurations.
 
