@@ -5,7 +5,7 @@
 	"copyright": "Copyright © 2020, Ahmet Sait",
 	"license": "BSL-1.0",
 	"targetType": "staticLibrary",
-	"targetPath": "bin/$BUILD_TYPE-$ARCH",
+	"targetPath": "bin/$BUILD_TYPE-$PLATFORM-$ARCH",
 	"sourcePaths": [ "src" ],
 	"importPaths": [ "src" ],
 	"dependencies": {
