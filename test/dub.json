@@ -4,7 +4,7 @@
 	"copyright": "Copyright © 2020, Ahmet Sait",
 	"license": "BSL-1.0",
 	"targetType": "executable",
-	"targetPath": "bin/$BUILD_TYPE-$ARCH",
+	"targetPath": "bin/$BUILD_TYPE-$PLATFORM-$ARCH",
 	"sourcePaths": ["src"],
 	"importPaths": ["src"],
 	"mainSourceFile": "src/app.d",
